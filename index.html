@@ -75,13 +75,12 @@
           ],
           {
             color: "black",
-            fillColor: "#db6399",
+            fillColor: "#245231",
             fillOpacity: 0.5,
             radius: 1000,
           }
-        ).addTo(map);
+        ).bindPopup("Data: " + west.toString()).addTo(map);
 
-        westCircleMarker.bindPopup("Data: " + west.toString());
 
         var eastCircleMarker = L.circle(
           [
@@ -90,13 +89,11 @@
           ],
           {
             color: "black",
-            fillColor: "#db6399",
+            fillColor: "#245231",
             fillOpacity: 0.5,
             radius: 1000,
           }
-        ).addTo(map);
-
-        eastCircleMarker.bindPopup("Data: " + east.toString());
+        ).bindPopup("Data: " + east.toString()).addTo(map);
 
         var centralCircleMarker = L.circle(
           [
@@ -105,7 +102,7 @@
           ],
           {
             color: "black",
-            fillColor: "#db6399",
+            fillColor: "#245231",
             fillOpacity: 0.5,
             radius: 1000,
           }
@@ -120,13 +117,11 @@
           ],
           {
             color: "black",
-            fillColor: "#db6399",
+            fillColor: "#245231",
             fillOpacity: 0.5,
             radius: 1000,
           }
-        ).addTo(map);
-
-        southCircleMarker.bindPopup("Data: " + south.toString());
+        ).bindPopup("Data: " + south.toString()).addTo(map);
 
         var northCircleMarker = L.circle(
           [
@@ -135,13 +130,12 @@
           ],
           {
             color: "black",
-            fillColor: "#db6399",
+            fillColor: "#245231",
             fillOpacity: 0.5,
             radius: 1000,
           }
-        ).addTo(map);
+        ).bindPopup("Data: " + north.toString()).addTo(map);
 
-        northCircleMarker.bindPopup("Data: " + north.toString());
       });
   </script>
 </html>
