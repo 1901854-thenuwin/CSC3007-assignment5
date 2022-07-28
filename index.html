@@ -80,7 +80,7 @@
             radius: 1500,
           }
         )
-          .bindPopup("Data: " + west.toString())
+          .bindPopup("PSI VALUE: " + west.toString())
           .addTo(map);
 
         var eastCircleMarker = L.circle(
@@ -95,7 +95,7 @@
             radius: 1500,
           }
         )
-          .bindPopup("Data: " + east.toString())
+          .bindPopup("PSI VALUE: " + east.toString())
           .addTo(map);
 
         var centralCircleMarker = L.circle(
@@ -111,7 +111,7 @@
           }
         ).addTo(map);
 
-        centralCircleMarker.bindPopup("Data: " + central.toString());
+        centralCircleMarker.bindPopup("PSI VALUE: " + central.toString());
 
         var southCircleMarker = L.circle(
           [
@@ -125,7 +125,7 @@
             radius: 1500,
           }
         )
-          .bindPopup("Data: " + south.toString())
+          .bindPopup("PSI VALUE: " + south.toString())
           .addTo(map);
 
         var northCircleMarker = L.circle(
@@ -140,7 +140,7 @@
             radius: 1500,
           }
         )
-          .bindPopup("Data: " + north.toString())
+          .bindPopup("PSI VALUE: " + north.toString())
           .addTo(map);
       });
   </script>
