@@ -14,7 +14,7 @@
     <style>
       #map {
         width: 1000px;
-    height: 600px;
+        height: 600px;
       }
     </style>
   </head>
@@ -27,21 +27,121 @@
     crossorigin=""
   ></script>
   <script>
+    let tiles = new L.tileLayer(
+      "https://maps-{s}.onemap.sg/v3/Default/{z}/{x}/{y}.png",
+      {
+        detectRetina: true,
+        maxZoom: 18,
+        minZoom: 11,
+        //Do not remove this attribution
+        attribution:
+          '<img src="https://docs.onemap.sg/maps/images/oneMap64-01.png" style="height:20px;width:20px;">' +
+          'New OneMap | Map data © contributors, <a href="http://SLA.gov.sg">Singapore Land Authority</a>',
+      }
+    );
+    let map = new L.Map("map", {
+      center: [1.347833, 103.809357],
+      zoom: 11,
+      maxBounds: L.latLngBounds(L.latLng(1.1, 103.5), L.latLng(1.5, 104.3)),
+    }).addLayer(tiles);
 
-let tiles = new L.tileLayer('https://maps-{s}.onemap.sg/v3/Default/{z}/{x}/{y}.png', {
-  detectRetina: true,
-  maxZoom: 18,
-  minZoom: 11,
-  //Do not remove this attribution
-  attribution: '<img src="https://docs.onemap.sg/maps/images/oneMap64-01.png" style="height:20px;width:20px;">' +
-               'New OneMap | Map data © contributors, <a href="http://SLA.gov.sg">Singapore Land Authority</a>'
-});
-let map = new L.Map("map", {
-    center: [1.347833, 103.809357], 
-    zoom: 11,
-    maxBounds: L.latLngBounds(L.latLng(1.1, 103.5), L.latLng(1.5, 104.3))
-    })
-    .addLayer(tiles);
+    fetch("https://api.data.gov.sg/v1/environment/psi")
+      .then((response) => response.json())
+      .then(function (psiData) {
+        console.log(psiData);
+        var psiReading = Object.keys(
+          psiData.items[0].readings["psi_twenty_four_hourly"]
+        );
+        var regions = psiData.region_metadata;
 
+        for (let i = 0; i < psiReading.length; i++) {
+          var central = Object.values(psiData.items[0].readings)[i].central;
+          var west = Object.values(psiData.items[0].readings)[i].west;
+          var east = Object.values(psiData.items[0].readings)[i].east;
+          var north = Object.values(psiData.items[0].readings)[i].north;
+          var south = Object.values(psiData.items[0].readings)[i].south;
+
+          central += central;
+          west += west;
+          east += east;
+          north += north;
+          south += south;
+        }
+
+        var westCircleMarker = L.circle(
+          [
+            regions[0].label_location.latitude,
+            regions[0].label_location.longitude,
+          ],
+          {
+            color: "black",
+            fillColor: "#db6399",
+            fillOpacity: 0.5,
+            radius: 1000,
+          }
+        ).addTo(map);
+
+        westCircleMarker.bindPopup("Data: " + west.toString());
+
+        var eastCircleMarker = L.circle(
+          [
+            regions[2].label_location.latitude,
+            regions[2].label_location.longitude,
+          ],
+          {
+            color: "black",
+            fillColor: "#db6399",
+            fillOpacity: 0.5,
+            radius: 1000,
+          }
+        ).addTo(map);
+
+        eastCircleMarker.bindPopup("Data: " + east.toString());
+
+        var centralCircleMarker = L.circle(
+          [
+            regions[3].label_location.latitude,
+            regions[3].label_location.longitude,
+          ],
+          {
+            color: "black",
+            fillColor: "#db6399",
+            fillOpacity: 0.5,
+            radius: 1000,
+          }
+        ).addTo(map);
+
+        centralCircleMarker.bindPopup("Data: " + central.toString());
+
+        var southCircleMarker = L.circle(
+          [
+            regions[4].label_location.latitude,
+            regions[4].label_location.longitude,
+          ],
+          {
+            color: "black",
+            fillColor: "#db6399",
+            fillOpacity: 0.5,
+            radius: 1000,
+          }
+        ).addTo(map);
+
+        southCircleMarker.bindPopup("Data: " + south.toString());
+
+        var northCircleMarker = L.circle(
+          [
+            regions[5].label_location.latitude,
+            regions[5].label_location.longitude,
+          ],
+          {
+            color: "black",
+            fillColor: "#db6399",
+            fillOpacity: 0.5,
+            radius: 1000,
+          }
+        ).addTo(map);
+
+        northCircleMarker.bindPopup("Data: " + north.toString());
+      });
   </script>
 </html>
